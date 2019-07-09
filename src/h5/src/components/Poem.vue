@@ -43,7 +43,7 @@ export default {
   padding: 1px;
 }
 .content {
-  font-family: 'FangSong';
+  font-family: 'KaiTi';
   font-size: 16px;
   padding-top: 10px;
   padding-bottom: 10px;

@@ -13,4 +13,5 @@ public class PoemDetails {
     private String dynasty;
     private String author;
     private String content;
+    private String type;
 }
