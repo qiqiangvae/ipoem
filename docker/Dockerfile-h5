@@ -1,0 +1,14 @@
+FROM nginx
+MAINTAINER qiqiangvae@foxmail.com
+WORKDIR ./src/ipoem-h5
+ADD ./src/ipoem-h5/dist/ /home/ipoem/ipoem-h5/
+ADD ./docker/nginx/
+CMD docker run --name nginx -d -p 7070:7070 -p 7071:7071 \
+    -v /Users/qiqiang/Dev/middleware/nginx/config/docker_nginx.conf:/etc/nginx/nginx.conf \
+    -v /Users/qiqiang/Dev/middleware/nginx:/home/nginx \
+    -v /Users/qiqiang/Dev/middleware/nginx/files:/home/nginx/files \
+    -v /Users/qiqiang/Dev/middleware/nginx/ipoem:/home/nginx/ipoem \
+    nginx
+
+EXPOSE 8112
+
