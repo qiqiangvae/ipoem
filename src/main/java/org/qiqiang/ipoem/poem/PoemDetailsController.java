@@ -1,5 +1,6 @@
 package org.qiqiang.ipoem.poem;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,12 @@ public class PoemDetailsController {
     }
 
     @GetMapping("/poemDetails")
-    public PoemDetails random(@RequestParam Boolean random) {
-        return poemDetailsService.random();
+    public PoemDetailsDto random(@RequestParam Boolean random) {
+        PoemDetails poem = poemDetailsService.random();
+        PoemDetailsDto dto = new PoemDetailsDto();
+        BeanUtils.copyProperties(poem, dto);
+        dto.setLines(PoemContentConvertor.content2Lines(poem.getContent()));
+        return dto;
+
     }
 }

@@ -5,9 +5,11 @@ spring:
       host: 118.25.48.56
       port: 27017
       database: ipoem
-
+    elasticsearch:
+      cluster-name: qiqiang
+      cluster-nodes: localhost:9200
 ipoem:
   spider:
-    enable: false
+    enable: true
 server:
   port: 8111

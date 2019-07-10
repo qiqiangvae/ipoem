@@ -35,13 +35,9 @@ public class SpiderModelPipeline implements PageModelPipeline<PoemSpiderDetails>
         poemDetails.setAuthor(StringUtils.strip(poemSpiderDetails.getAuthor()));
         poemDetails.setTitle(StringUtils.strip(poemSpiderDetails.getTitle()));
         String content = poemSpiderDetails.getContent();
-        List<String> contentList = new ArrayList<>(Arrays.asList(content.split("。")))
-                .stream()
-                .filter(StringUtils::isNotBlank)
-                .map(line -> StringUtils.strip(line) + "。")
-                .collect(Collectors.toList());
-        poemDetails.setContent(contentList);
+        poemDetails.setContent(content);
         poemDetailsService.insertOne(poemDetails);
+
 
     }
 
