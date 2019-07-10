@@ -8,7 +8,7 @@
     </mt-cell>
     <div class="content">
       <mt-cell
-        v-for="(line,index) in poem.contentLines"
+        v-for="(line,index) in poem.content"
         :key="index"
       >
         <span>{{line}}</span>

@@ -1,0 +1,13 @@
+
+spring:
+  data:
+    mongodb:
+      host: 118.25.48.56
+      port: 27017
+      database: ipoem
+
+ipoem:
+  spider:
+    enable: false
+server:
+  port: 8111
