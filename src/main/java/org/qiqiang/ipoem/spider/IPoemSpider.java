@@ -26,9 +26,12 @@ public class IPoemSpider implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (spiderEnable){
+        if (spiderEnable) {
             String startUrl = "http://www.shicimingju.com/category/all";
-            OOSpider.create(site, spiderModelPipeline, PoemSpiderDetails.class).addUrl(startUrl).run();
+            OOSpider.create(site, spiderModelPipeline, PoemSpiderDetails.class)
+                    .thread(5)
+                    .addUrl(startUrl)
+                    .run();
         }
     }
 }
