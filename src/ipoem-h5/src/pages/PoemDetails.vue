@@ -27,7 +27,7 @@ export default {
     },
     getPoem(that) {
       that = this
-      this.axios.get('/poemDetails?random=true')
+      this.axios.get('/poemDetails')
         .then(res => {
           if (res.status === 200) {
             that.poem = res.data

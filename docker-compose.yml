@@ -28,7 +28,16 @@ services:
     networks:
       - ipoemnet
 
-
+  h5:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-h5
+    restart: always
+    container_name: h5
+    ports:
+      - 7071:7071
+    networks:
+      - ipoemnet
 
 networks:
   ipoemnet:
