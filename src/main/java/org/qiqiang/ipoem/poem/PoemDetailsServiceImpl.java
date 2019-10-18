@@ -1,7 +1,6 @@
 package org.qiqiang.ipoem.poem;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.qiqiang.ipoem.es.InsertIntoEs;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
@@ -25,7 +24,6 @@ public class PoemDetailsServiceImpl implements IPoemDetailsService {
     }
 
     @Override
-    @InsertIntoEs
     public PoemDetails insertOne(PoemDetails poemDetails) {
         return poemDetailsRepository.insert(poemDetails);
     }

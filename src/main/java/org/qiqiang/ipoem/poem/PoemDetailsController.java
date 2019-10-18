@@ -20,12 +20,11 @@ public class PoemDetailsController {
     }
 
     @GetMapping("/poemDetails")
-    public PoemDetailsDto random(@RequestParam Boolean random) {
+    public PoemDetailsDto random() {
         PoemDetails poem = poemDetailsService.random();
         PoemDetailsDto dto = new PoemDetailsDto();
         BeanUtils.copyProperties(poem, dto);
         dto.setLines(PoemContentConvertor.content2Lines(poem.getContent()));
         return dto;
-
     }
 }

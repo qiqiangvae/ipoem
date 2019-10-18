@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+
+  back:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    container_name: back
+    environment:
+      MONGO_HOST: mongo
+      MONGO_PORT: 27017
+    ports:
+      - 8111:8111
+    depends_on:
+      - mongo
+    networks:
+      - ipoemnet
+
+  mongo:
+    image: 'mongo:latest'
+    restart: always
+    container_name: mongo
+    hostname: mongo
+    volumes:
+      - /Users/qiqiang/Desktop/docker-supershop/docker-compose/mongodata:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - ipoemnet
+
+
+
+networks:
+  ipoemnet:
+    driver: bridge
+    name: ipoemnet
