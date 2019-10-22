@@ -18,6 +18,8 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     container_name: back
+    volumes:
+      - ./target/ipoem*.jar:/home/ipoem/ipoem.jar
     environment:
       MONGO_HOST: mongo
       MONGO_PORT: 27017
@@ -34,6 +36,9 @@ services:
       dockerfile: ./Dockerfile-h5
     restart: always
     container_name: h5
+    volumes:
+      - ./src/ipoem-h5/dist/:/home/nginx/ipoem-h5
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 7071:7071
     networks:
