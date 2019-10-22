@@ -1,7 +1,12 @@
 <template>
-    <div class="page" v-finger:swipe="swipeHandler">
-        <Poem :poem="poem"></Poem>
-    </div>
+  <div
+    class='page'
+    v-finger:swipe='swipeHandler'
+    @keyup.right='swipeHandler'
+    @keyup.left='swipeHandler'
+  >
+    <Poem :poem='poem'></Poem>
+  </div>
 </template>
 
 <script>
@@ -11,7 +16,7 @@ export default {
   components: {
     Poem
   },
-  data() {
+  data () {
     return {
       poem: {
         title: '',
@@ -22,20 +27,19 @@ export default {
     }
   },
   methods: {
-    swipeHandler(e) {
+    swipeHandler (e) {
       this.getPoem()
     },
-    getPoem(that) {
+    getPoem (that) {
       that = this
-      this.axios.get('/poemDetails')
-        .then(res => {
-          if (res.status === 200) {
-            that.poem = res.data
-          }
-        })
+      this.axios.get('/poemDetails').then(res => {
+        if (res.status === 200) {
+          that.poem = res.data
+        }
+      })
     }
   },
-  created() {
+  created () {
     this.getPoem()
   }
 }
