@@ -1,4 +1,4 @@
-package org.qiqiang.ipoem;
+package org.qiqiang.chinesepoetry;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

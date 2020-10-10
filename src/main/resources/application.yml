@@ -1,11 +1,7 @@
 spring:
-  data:
-    mongodb:
-      host: ${MONGO_HOST}
-      port: ${MONGO_PORT}
-      database: ipoem
-ipoem:
-  spider:
-    enable: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/chinese_poetry
+    username: root
+    password: root
 server:
   port: 8111

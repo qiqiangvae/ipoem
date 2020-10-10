@@ -1,4 +1,4 @@
-package org.qiqiang.ipoem.utils;
+package org.qiqiang.chinesepoetry.utils;
 
 import java.util.UUID;
 

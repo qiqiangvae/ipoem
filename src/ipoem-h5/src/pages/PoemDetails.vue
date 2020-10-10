@@ -32,7 +32,7 @@ export default {
     },
     getPoem (that) {
       that = this
-      this.axios.get('/poemDetails').then(res => {
+      this.axios.get('/random/shi').then(res => {
         if (res.status === 200) {
           that.poem = res.data
         }

@@ -1,4 +1,4 @@
-package org.qiqiang.ipoem;
+package org.qiqiang.chinesepoetry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package org.qiqiang.ipoem.config;
+package org.qiqiang.chinesepoetry.config;
 
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
