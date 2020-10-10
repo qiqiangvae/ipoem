@@ -1,5 +1,6 @@
 package org.qiqiang.chinesepoetry.poetry.shi;
 
+import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import org.qiqiang.chinesepoetry.poetry.shi.model.ShiEntity;
 import org.qiqiang.chinesepoetry.poetry.shi.service.ShiService;
 import org.qiqiang.chinesepoetry.poetry.vo.PoetryDetailsResponseVO;
@@ -22,10 +23,16 @@ public class ShiController {
     }
 
     @GetMapping("/random/shi")
-    public PoetryDetailsResponseVO random() {
+    public PoetryDetailsResponseVO random(Boolean simple) {
         ShiEntity poem = poemDetailsService.random();
         PoetryDetailsResponseVO dto = new PoetryDetailsResponseVO();
         BeanUtils.copyProperties(poem, dto);
+        if (simple) {
+            poem.setParagraphs(ZhConverterUtil.toSimple(poem.getParagraphs()));
+            dto.setTitle(ZhConverterUtil.toSimple(poem.getTitle()));
+            dto.setAuthor(ZhConverterUtil.toSimple(poem.getAuthor()));
+            dto.setDynasty(ZhConverterUtil.toSimple(poem.getDynasty()));
+        }
         dto.setLines(ShiConvertor.content2Lines(poem.getParagraphs()));
         return dto;
     }
