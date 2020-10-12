@@ -9,30 +9,30 @@ import java.util.List;
 
 @Service
 public class ShiServiceImpl implements ShiService {
-    private final ShiRepository poemDetailsRepository;
+    private final ShiRepository shiRepository;
 
     public ShiServiceImpl(ShiRepository poemDetailsRepository) {
-        this.poemDetailsRepository = poemDetailsRepository;
+        this.shiRepository = poemDetailsRepository;
     }
 
     @Override
     public ShiEntity findById(Long id) {
-        return poemDetailsRepository.findById(id).orElse(null);
+        return shiRepository.findById(id).orElse(null);
     }
 
     @Override
     public ShiEntity insertOne(ShiEntity shiEntity) {
-        return poemDetailsRepository.save(shiEntity);
+        return shiRepository.save(shiEntity);
     }
 
     @Override
     public List<ShiEntity> findByAuthor(String author) {
-        return poemDetailsRepository.findByAuthor(author);
+        return shiRepository.findByAuthor(author);
     }
 
     @Override
     public ShiEntity random() {
-        long count = poemDetailsRepository.count();
+        long count = shiRepository.count();
         return this.findById(RandomUtils.nextLong(0, count));
     }
 }

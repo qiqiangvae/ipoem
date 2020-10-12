@@ -2,6 +2,10 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/chinese_poetry
     username: root
-    password: root
+    password: mypassword
 server:
   port: 8111
+poetry:
+  es:
+    index: chinese_poetry_shi_new
+    address: mycloud:9200

@@ -27,7 +27,7 @@ public class ShiController {
         ShiEntity poem = poemDetailsService.random();
         PoetryDetailsResponseVO dto = new PoetryDetailsResponseVO();
         BeanUtils.copyProperties(poem, dto);
-        if (simple) {
+        if (Boolean.TRUE.equals(simple)) {
             poem.setParagraphs(ZhConverterUtil.toSimple(poem.getParagraphs()));
             dto.setTitle(ZhConverterUtil.toSimple(poem.getTitle()));
             dto.setAuthor(ZhConverterUtil.toSimple(poem.getAuthor()));
