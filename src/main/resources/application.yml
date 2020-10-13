@@ -10,4 +10,4 @@ server:
 poetry:
   es:
     index: chinese_poetry_shi_new
-    address: mycloud:9200
+    address: localhost:9200
