@@ -1,8 +1,7 @@
 <template>
   <div>
     <div>
-      <mt-search v-model="searchValue" cancel-text="取消" placeholder="搜索">
-      </mt-search>
+      <mt-search class="search-input" v-model="searchValue" placeholder="输入搜索内容"> </mt-search>
     </div>
     <div
       class="content"
@@ -73,5 +72,9 @@ export default {
 <style scoped>
 .poem-content {
   margin-top: 50px;
+  text-align: center;
+}
+.search-input{
+  width: 100px;
 }
 </style>

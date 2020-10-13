@@ -43,4 +43,5 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+src/main/resources/application-pro.yml
 
