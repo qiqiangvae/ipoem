@@ -29,7 +29,7 @@ start() {
     # 启动
     echo "准备启动$FULL_JAR_NAME"
     echo "nohup java -Xmx256m -Xms256m -Xmn256m -jar $FULL_JAR_NAME >/dev/null 2>&1 &"
-    nohup java -Xmx256m -Xms256m -Xmn256m -jar "$FULL_JAR_NAME" >server.log 2>&1 &
+    nohup java -Xmx256m -Xms256m -Xmn256m -jar "$FULL_JAR_NAME" -Dspring.config.location="$WORKSPACE/application.yml" >server.log 2>&1 &
 
     # 等待启动完成
     COUNT=0
