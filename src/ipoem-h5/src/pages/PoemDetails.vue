@@ -1,11 +1,17 @@
 <template>
-  <div
-    class='page'
-    v-finger:swipe='swipeHandler'
-    @keyup.right='swipeHandler'
-    @keyup.left='swipeHandler'
-  >
-    <Poem :poem='poem'></Poem>
+  <div>
+    <div>
+      <mt-search v-model="searchValue" cancel-text="取消" placeholder="搜索">
+      </mt-search>
+    </div>
+    <div
+      class="content"
+      v-finger:swipe="swipeHandler"
+      @keyup.right="swipeHandler"
+      @keyup.left="swipeHandler"
+    >
+      <Poem :poem="poem" class="poem-content"></Poem>
+    </div>
   </div>
 </template>
 
@@ -16,8 +22,9 @@ export default {
   components: {
     Poem
   },
-  data () {
+  data() {
     return {
+      searchValue: '',
       poem: {
         title: '',
         dynasty: '',
@@ -27,20 +34,44 @@ export default {
     }
   },
   methods: {
-    swipeHandler (e) {
+    swipeHandler(e) {
       this.getPoem()
     },
-    getPoem (that) {
+    getPoem(that) {
       that = this
       this.axios.get('/random/shi?simple=true').then(res => {
         if (res.status === 200) {
           that.poem = res.data
         }
       })
+    },
+    search(that) {
+      that = this
+      if (this.searchValue) {
+        this.axios.get('/search/shi?simple=true&search=' + this.searchValue).then(res => {
+          if (res.status === 200) {
+            console.log(res.data)
+            if (res.data && res.data.length > 0) {
+              that.poem = res.data[0]
+            }
+          }
+        })
+      }
     }
   },
-  created () {
+  watch: {
+    searchValue() {
+      this.search()
+    }
+  },
+  created() {
     this.getPoem()
   }
 }
 </script>
+
+<style scoped>
+.poem-content {
+  margin-top: 50px;
+}
+</style>
