@@ -7,5 +7,5 @@ nohup java -Xms256m -Xmx256m  -jar ipoem-0.0.2-SNAPSHOT.jar > chinese_poetry.log
 echo '后台启动成功'
 # 前端打包
 echo '打包前端'
-cd src/ipoem-h5 & npm install & npm run build & cp src/ipoem-h5/dist /Workspace/chinese_poetry/dist
+npm install & npm run build & cp src/ipoem-h5/dist /Workspace/chinese_poetry/dist
 echo '前端打包完成'
