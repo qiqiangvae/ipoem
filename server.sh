@@ -16,6 +16,10 @@ WORKSPACE=$(pwd)
 JAR_NAME=$(ls $WORKSPACE | grep .jar$ | awk '{print "'$LIB_DIR'/"$0}')
 FULL_JAR_NAME="$WORKSPACE$JAR_NAME"
 
+# jvm 参数
+JVM_GC_PARAMS=""
+JVM_MEMORY_PARAMS="-Xmx256m -Xms256m -Xmn256m"
+
 # 启动命令
 start() {
     # 根据配置文件找出 pid
@@ -28,8 +32,8 @@ start() {
 
     # 启动
     echo "准备启动$FULL_JAR_NAME"
-    echo "nohup java -Xmx256m -Xms256m -Xmn256m -jar $FULL_JAR_NAME -Dspring.config.location=$WORKSPACE/application.yml >/dev/null 2>&1 &"
-    nohup java -Xmx256m -Xms256m -Xmn256m -jar "$FULL_JAR_NAME" -Dspring.config.location="$WORKSPACE/application.yml" >/dev/null 2>&1 &
+    echo "nohup java $JVM_MEMORY_PARAMS  $JVM_GC_PARAMS -jar $FULL_JAR_NAME -Dspring.config.location=$WORKSPACE/application.yml >/dev/null 2>&1 &"
+    nohup java "$JVM_MEMORY_PARAMS" "$JVM_GC_PARAMS" -jar "$FULL_JAR_NAME" -Dspring.config.location="$WORKSPACE/application.yml" >/dev/null 2>&1 &
 
     # 等待启动完成
     COUNT=0
