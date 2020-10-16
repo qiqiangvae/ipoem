@@ -5,6 +5,14 @@ spring:
     password: mypassword
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: info,health
 server:
   port: 8111
 poetry:
