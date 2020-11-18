@@ -14,6 +14,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.qiqiang.chinesepoetry.poetry.shi.model.ShiEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -31,21 +32,25 @@ public class ShiSearchServiceImpl implements ShiSearchService {
 
     @Autowired
     private RestHighLevelClient shiSearchClient;
+    @Value("${poetry.es.index}")
+    private String index;
+
 
     @Override
     public List<ShiEntity> search(String search) {
-        SearchRequest request = new SearchRequest("chinese_poetry_shi_new");
+        SearchRequest request = new SearchRequest(index);
         List<ShiEntity> list = new ArrayList<>();
         try {
             //构建搜索条件
             SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+            if (search == null) {
+                search = "";
+            }
             MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(search, "author", "title", "paragraphs");
             sourceBuilder.query(multiMatchQueryBuilder)
                     .timeout(new TimeValue(60, TimeUnit.SECONDS));
             request.source(sourceBuilder);
             SearchResponse searchResponse = shiSearchClient.search(request, RequestOptions.DEFAULT);
-            String text = JSON.toJSONString(searchResponse.getHits(), true);
-            System.out.println(ZhConverterUtil.toSimple(text));
             for (SearchHit documentFields : searchResponse.getHits()) {
                 ShiEntity shiEntity = JSON.parseObject(JSON.toJSONString(documentFields.getSourceAsMap()), ShiEntity.class);
                 list.add(shiEntity);

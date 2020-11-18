@@ -1,39 +1,62 @@
 package org.qiqiang.chinesepoetry.poetry.shi;
 
-import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import org.qiqiang.chinesepoetry.poetry.shi.model.ShiEntity;
+import org.qiqiang.chinesepoetry.poetry.shi.service.ShiSearchService;
 import org.qiqiang.chinesepoetry.poetry.shi.service.ShiService;
+import org.qiqiang.chinesepoetry.poetry.vo.PoetryDetailsResponseUtils;
 import org.qiqiang.chinesepoetry.poetry.vo.PoetryDetailsResponseVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class ShiController {
     private final ShiService poemDetailsService;
+    private final ShiSearchService shiSearchService;
 
-    public ShiController(ShiService poemDetailsService) {
+    public ShiController(ShiService poemDetailsService, ShiSearchService shiSearchService) {
         this.poemDetailsService = poemDetailsService;
+        this.shiSearchService = shiSearchService;
     }
 
+    /**
+     * 根据id查找诗
+     *
+     * @param id id
+     * @return 诗
+     */
     @GetMapping("/shi/{id}")
-    public ShiEntity findById(@PathVariable Long id) {
-        return poemDetailsService.findById(id);
+    public PoetryDetailsResponseVO findById(@PathVariable Long id, Boolean simple) {
+        ShiEntity shiEntity = poemDetailsService.findById(id);
+        return PoetryDetailsResponseUtils.shi2Response(shiEntity, Boolean.TRUE.equals(simple));
     }
 
+    /**
+     * 随机获取一首诗
+     *
+     * @param simple 是否返回简体字
+     * @return 诗
+     */
     @GetMapping("/random/shi")
     public PoetryDetailsResponseVO random(Boolean simple) {
-        ShiEntity poem = poemDetailsService.random();
-        PoetryDetailsResponseVO dto = new PoetryDetailsResponseVO();
-        BeanUtils.copyProperties(poem, dto);
-        if (Boolean.TRUE.equals(simple)) {
-            poem.setParagraphs(ZhConverterUtil.toSimple(poem.getParagraphs()));
-            dto.setTitle(ZhConverterUtil.toSimple(poem.getTitle()));
-            dto.setAuthor(ZhConverterUtil.toSimple(poem.getAuthor()));
-            dto.setDynasty(ZhConverterUtil.toSimple(poem.getDynasty()));
+        ShiEntity shiEntity = poemDetailsService.random();
+        return PoetryDetailsResponseUtils.shi2Response(shiEntity, Boolean.TRUE.equals(simple));
+    }
+
+    /**
+     * 搜索诗
+     */
+    @GetMapping("shi")
+    public List<PoetryDetailsResponseVO> search(String search, Boolean simple) {
+        List<ShiEntity> list = shiSearchService.search(search);
+        List<PoetryDetailsResponseVO> result = new ArrayList<>(list.size());
+        for (ShiEntity shiEntity : list) {
+            PoetryDetailsResponseVO dto = PoetryDetailsResponseUtils.shi2Response(shiEntity, Boolean.TRUE.equals(simple));
+            result.add(dto);
         }
-        dto.setLines(ShiConvertor.content2Lines(poem.getParagraphs()));
-        return dto;
+        return result;
     }
 }

@@ -17,5 +17,5 @@ server:
   port: 8111
 poetry:
   es:
-    index: chinese_poetry_shi_new
+    index: chinese_poetry_shi
     address: mycloud:9200

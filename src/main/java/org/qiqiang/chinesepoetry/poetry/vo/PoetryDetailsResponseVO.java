@@ -1,6 +1,5 @@
 package org.qiqiang.chinesepoetry.poetry.vo;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -13,7 +12,7 @@ import java.util.List;
  */
 @Data
 public class PoetryDetailsResponseVO {
-    private String id;
+    private Long id;
     private String title;
     private String dynasty;
     private String author;

@@ -1,6 +1,6 @@
 #!/bin/zsh
 # 使用命令
-USAGE="Usage: startup.sh {start|stop|restart}"
+USAGE="Usage: startup.sh {start|stop|restart} {debug}"
 
 # 参数个数
 exec_param_count=$#
