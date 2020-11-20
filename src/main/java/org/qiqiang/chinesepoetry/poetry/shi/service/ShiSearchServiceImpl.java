@@ -13,6 +13,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.qiqiang.chinesepoetry.common.PageHolder;
 import org.qiqiang.chinesepoetry.poetry.shi.model.ShiEntity;
+import org.qiqiang.chinesepoetry.poetry.shi.vo.ShiSearchDTO;
 import org.qiqiang.chinesepoetry.vo.PageRequest;
 import org.qiqiang.chinesepoetry.vo.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class ShiSearchServiceImpl implements ShiSearchService {
 
 
     @Override
-    public PageHolder<ShiEntity> search(String search, PageRequest pageRequest) {
+    public PageHolder<ShiEntity> search(ShiSearchDTO shiSearchDTO, PageRequest pageRequest) {
         SearchRequest request = new SearchRequest(index);
         List<ShiEntity> list = new ArrayList<>();
         PageResponse pageResponse = null;
@@ -48,8 +49,12 @@ public class ShiSearchServiceImpl implements ShiSearchService {
             //构建搜索条件
             SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
             MultiMatchQueryBuilder multiMatchQueryBuilder;
-            if (StringUtils.isNotBlank(search)) {
-                multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(search, "title", "author", "paragraphs");
+            if (StringUtils.isNotBlank(shiSearchDTO.getSearch())) {
+                String[] searchTargets = new String[]{"title", "author", "paragraphs"};
+                if (StringUtils.isNotBlank(shiSearchDTO.getSearchTarget())) {
+                    searchTargets = StringUtils.split(shiSearchDTO.getSearchTarget(), ",");
+                }
+                multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(shiSearchDTO.getSearch(), searchTargets);
                 sourceBuilder.query(multiMatchQueryBuilder);
             }
             sourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
