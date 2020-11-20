@@ -1,4 +1,4 @@
-package org.qiqiang.chinesepoetry.poetry.vo;
+package org.qiqiang.chinesepoetry.poetry.shi.vo;
 
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import org.qiqiang.chinesepoetry.poetry.shi.ShiConvertor;

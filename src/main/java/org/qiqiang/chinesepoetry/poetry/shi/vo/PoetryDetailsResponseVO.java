@@ -1,4 +1,4 @@
-package org.qiqiang.chinesepoetry.poetry.vo;
+package org.qiqiang.chinesepoetry.poetry.shi.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

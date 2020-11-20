@@ -1,8 +1,8 @@
 package org.qiqiang.chinesepoetry.poetry.shi.service;
 
+import org.qiqiang.chinesepoetry.common.PageHolder;
 import org.qiqiang.chinesepoetry.poetry.shi.model.ShiEntity;
-
-import java.util.List;
+import org.qiqiang.chinesepoetry.vo.PageRequest;
 
 /**
  * 诗词
@@ -15,7 +15,8 @@ public interface ShiSearchService {
      * 通过作者查找
      *
      * @param search 作者
+     * @param pageRequest 分页信息
      * @return 诗词集合
      */
-    List<ShiEntity> search(String search);
+    PageHolder<ShiEntity> search(String search, PageRequest pageRequest);
 }

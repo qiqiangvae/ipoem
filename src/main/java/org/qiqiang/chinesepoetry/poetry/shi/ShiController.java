@@ -1,10 +1,13 @@
 package org.qiqiang.chinesepoetry.poetry.shi;
 
+import org.qiqiang.chinesepoetry.common.PageHolder;
 import org.qiqiang.chinesepoetry.poetry.shi.model.ShiEntity;
 import org.qiqiang.chinesepoetry.poetry.shi.service.ShiSearchService;
 import org.qiqiang.chinesepoetry.poetry.shi.service.ShiService;
-import org.qiqiang.chinesepoetry.poetry.vo.PoetryDetailsResponseUtils;
-import org.qiqiang.chinesepoetry.poetry.vo.PoetryDetailsResponseVO;
+import org.qiqiang.chinesepoetry.poetry.shi.vo.PoetryDetailsResponseUtils;
+import org.qiqiang.chinesepoetry.poetry.shi.vo.PoetryDetailsResponseVO;
+import org.qiqiang.chinesepoetry.poetry.shi.vo.ShiPageVO;
+import org.qiqiang.chinesepoetry.vo.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,13 +53,17 @@ public class ShiController {
      * 搜索诗
      */
     @GetMapping("shi")
-    public List<PoetryDetailsResponseVO> search(String search, Boolean simple) {
-        List<ShiEntity> list = shiSearchService.search(search);
-        List<PoetryDetailsResponseVO> result = new ArrayList<>(list.size());
+    public ShiPageVO search(String search, Boolean simple, PageRequest pageRequest) {
+        PageHolder<ShiEntity> pageHolder = shiSearchService.search(search, pageRequest);
+        List<ShiEntity> list = pageHolder.getData();
+        ShiPageVO result = new ShiPageVO();
+        List<PoetryDetailsResponseVO> data = new ArrayList<>(list.size());
         for (ShiEntity shiEntity : list) {
             PoetryDetailsResponseVO dto = PoetryDetailsResponseUtils.shi2Response(shiEntity, Boolean.TRUE.equals(simple));
-            result.add(dto);
+            data.add(dto);
         }
+        result.setData(data);
+        result.setPage(pageHolder.getPageResponse());
         return result;
     }
 }
